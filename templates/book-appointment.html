@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consult</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            animation: fadeIn 2s ease-in;
+        }
+        .search-container {
+            margin: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 60%;
+        }
+        button {
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .doctor-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .doctor {
+            background: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .doctor:hover {
+            transform: scale(1.05);
+        }
+        .slot {
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+        .slot:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="fade-in">Doctor Consultation</h1>
+        <p class="fade-in">Find a doctor and book your consultation online</p>
+    </header>
+    <section class="search-container">
+        <input type="text" id="search" placeholder="Search for doctors, specialties...">
+        <button onclick="searchDoctor()">Search</button>
+    </section>
+    <section id="doctor-list" class="doctor-list">
+    </section>
+    <section id="appointment-section" style="display: none;">
+        <h2 id="doctor-name"></h2>
+        <p>Select an appointment time:</p>
+        <div id="time-slots"></div>
+    </section>
+    <script>
+        const doctors =[
+    { "name": "Dr. Oliver Matthews", "specialty": "Cardiologist" },
+    { "name": "Dr. Grace Hamilton", "specialty": "Dermatologist" },
+    { "name": "Dr. Henry Rogers", "specialty": "Neurologist" },
+    { "name": "Dr. Sophia Bennett", "specialty": "Pediatrician" },
+    { "name": "Dr. Noah Carter", "specialty": "General Surgeon" },
+    { "name": "Dr. Liam Scott", "specialty": "Gynecologist" },
+    { "name": "Dr. Ava Clarke", "specialty": "ENT Specialist" },
+    { "name": "Dr. Elijah Harris", "specialty": "Oncologist" },
+    { "name": "Dr. Lucas White", "specialty": "Ophthalmologist" },
+    { "name": "Dr. Emily Roberts", "specialty": "Pulmonologist" },
+    { "name": "Dr. James Foster", "specialty": "Nephrologist" },
+    { "name": "Dr. Mia Martinez", "specialty": "Radiologist" },
+    { "name": "Dr. Charlotte Evans", "specialty": "Rheumatologist" },
+    { "name": "Dr. Jackson Turner", "specialty": "Allergist" },
+    { "name": "Dr. Amelia Brooks", "specialty": "Anesthesiologist" },
+    { "name": "Dr. William Gonzalez", "specialty": "Gastroenterologist" },
+    { "name": "Dr. Harper Green", "specialty": "Hematologist" },
+    { "name": "Dr. Evelyn Adams", "specialty": "Immunologist" },
+    { "name": "Dr. Benjamin Lewis", "specialty": "Psychiatrist" },
+    { "name": "Dr. Abigail Walker", "specialty": "Pediatrician" },
+    { "name": "Dr. Lucas King", "specialty": "Cardiologist" },
+    { "name": "Dr. Ella Nelson", "specialty": "Neurologist" },
+    { "name": "Dr. Owen Cooper", "specialty": "Orthopedic Surgeon" },
+    { "name": "Dr. Scarlett Mitchell", "specialty": "Dermatologist" },
+    { "name": "Dr. Henry Thompson", "specialty": "General Surgeon" },
+    { "name": "Dr. Aria Parker", "specialty": "Gynecologist" },
+    { "name": "Dr. Levi Richardson", "specialty": "ENT Specialist" },
+    { "name": "Dr. Chloe Wright", "specialty": "Oncologist" },
+    { "name": "Dr. Michael Perez", "specialty": "Ophthalmologist" },
+    { "name": "Dr. Victoria Bell", "specialty": "Pulmonologist" },
+    { "name": "Dr. Lucas Harris", "specialty": "Nephrologist" },
+    { "name": "Dr. Zoey Scott", "specialty": "Radiologist" },
+    { "name": "Dr. Dylan Martinez", "specialty": "Rheumatologist" },
+    { "name": "Dr. Stella Evans", "specialty": "Allergist" },
+    { "name": "Dr. Nathaniel Turner", "specialty": "Anesthesiologist" },
+    { "name": "Dr. Claire Brooks", "specialty": "Gastroenterologist" },
+    { "name": "Dr. Hunter Gonzalez", "specialty": "Hematologist" },
+    { "name": "Dr. Aurora Green", "specialty": "Immunologist" },
+    { "name": "Dr. Julian Adams", "specialty": "Psychiatrist" },
+    { "name": "Dr. Paisley Walker", "specialty": "Pediatrician" },
+    { "name": "Dr. Ethan King", "specialty": "Cardiologist" },
+    { "name": "Dr. Lillian Nelson", "specialty": "Neurologist" },
+    { "name": "Dr. Easton Cooper", "specialty": "Orthopedic Surgeon" },
+    { "name": "Dr. Madeline Mitchell", "specialty": "Dermatologist" },
+    { "name": "Dr. Harrison Thompson", "specialty": "General Surgeon" },
+    { "name": "Dr. Penelope Parker", "specialty": "Gynecologist" },
+    { "name": "Dr. Wyatt Richardson", "specialty": "ENT Specialist" },
+    { "name": "Dr. Violet Wright", "specialty": "Oncologist" },
+    { "name": "Dr. Caleb Perez", "specialty": "Ophthalmologist" },
+    { "name": "Dr. Vivian Hayes", "specialty": "Genetic Counselor" },
+    { "name": "Dr. Samuel Peterson", "specialty": "Genetic Counselor" },
+    { "name": "Dr. Natalie Morris", "specialty": "Genetic Counselor" },
+    { "name": "Dr. Gabriel Bennett", "specialty": "Pain Management Specialist" },
+    { "name": "Dr. Isabella Myers", "specialty": "Pain Management Specialist" },
+    { "name": "Dr. Daniel Cruz", "specialty": "Pain Management Specialist" },
+    { "name": "Dr. Thomas Bailey", "specialty": "Sports Medicine Specialist" },
+    { "name": "Dr. Olivia Flores", "specialty": "Sports Medicine Specialist" },
+    { "name": "Dr. Ethan Rivera", "specialty": "Sports Medicine Specialist" },
+    { "name": "Dr. Margaret Collins", "specialty": "Geriatrician" },
+    { "name": "Dr. Robert Simmons", "specialty": "Geriatrician" },
+    { "name": "Dr. Linda Parker", "specialty": "Geriatrician" },
+    { "name": "Dr. Matthew Barnes", "specialty": "Endocrinologist" },
+    { "name": "Dr. Hannah Clarke", "specialty": "Endocrinologist" },
+    { "name": "Dr. Lucas Fisher", "specialty": "Endocrinologist" }
+  
+];
+
+function showDoctorsBySpecialty(specialty) {
+    const doctorList = document.getElementById('doctor-list');
+    doctorList.innerHTML = `<h2>Available ${specialty}s</h2>`;
+
+    // Filter doctors based on specialty
+    const filteredDoctors = doctors.filter(doctor => doctor.specialty === specialty);
+
+    if (filteredDoctors.length === 0) {
+        doctorList.innerHTML += `<p>No available ${specialty}s. Try another search.</p>`;
+        return;
+    }
+
+    filteredDoctors.forEach(doctor => {
+        const doctorDiv = document.createElement('div');
+        doctorDiv.classList.add('doctor');
+        doctorDiv.innerHTML = `<h3>${doctor.name}</h3><p>${doctor.specialty}</p>`;
+        doctorDiv.onclick = () => showAppointmentSlots(doctor.name);
+        doctorList.appendChild(doctorDiv);
+    });
+
+    // Scroll to doctors list
+    doctorList.scrollIntoView({ behavior: "smooth" });
+}
+
+        const timeSlots = ["10:00 AM", "11:00 AM", "1:00 PM", "3:00 PM", "4:00 PM"];
+
+        function searchDoctor() {
+            const searchValue = document.getElementById('search').value.toLowerCase();
+            const doctorList = document.getElementById('doctor-list');
+            doctorList.innerHTML = '';
+            
+            const filteredDoctors = doctors.filter(doctor => 
+                doctor.name.toLowerCase().includes(searchValue) || 
+                doctor.specialty.toLowerCase().includes(searchValue)
+            );
+            
+            if (filteredDoctors.length === 0) {
+                doctorList.innerHTML = '<p>No doctors found. Please try a different search.</p>';
+                return;
+            }
+
+            filteredDoctors.forEach(doctor => {
+                const doctorDiv = document.createElement('div');
+                doctorDiv.classList.add('doctor');
+                doctorDiv.innerHTML = `<h3>${doctor.name}</h3><p>${doctor.specialty}</p>`;
+                doctorDiv.onclick = () => showAppointmentSlots(doctor.name);
+                doctorList.appendChild(doctorDiv);
+            });
+        }
+
+        function showAppointmentSlots(doctorName) {
+            document.getElementById('doctor-name').textContent = "Appointments for ${doctorName}";
+            document.getElementById('appointment-section').style.display = 'block';
+            const timeSlotContainer = document.getElementById('time-slots');
+            timeSlotContainer.innerHTML = '';
+
+            timeSlots.forEach(slot => {
+                const slotDiv = document.createElement('div');
+                slotDiv.classList.add('slot');
+                slotDiv.textContent = slot;
+                slotDiv.onclick = () => bookAppointment(doctorName, slot);
+                timeSlotContainer.appendChild(slotDiv);
+                
+            });
+        }
+
+        function bookAppointment(doctorName, slot) {
+            alert("Appointment confirmed with ${doctorName} at ${slot}");
+            document.getElementById('appointment-section').style.display = 'none';
+            document.getElementById('time-slots').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

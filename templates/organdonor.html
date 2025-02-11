@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donor Mapping System</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url("{{ url_for('static', filename='doctorpatient.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: black;
+            margin: 0;
+          }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Organ Donor Registry</h1>
+            
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-blue-100 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-blue-800">Total Donors</h3>
+                    <p class="text-2xl font-bold text-blue-900" id="total-donors">0</p>
+                </div>
+                <div class="bg-green-100 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-green-800">Kidney Donors</h3>
+                    <p class="text-2xl font-bold text-green-900" id="kidney-donors">0</p>
+                </div>
+                <div class="bg-purple-100 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-purple-800">Liver Donors</h3>
+                    <p class="text-2xl font-bold text-purple-900" id="liver-donors">0</p>
+                </div>
+                <div class="bg-red-100 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-red-800">Heart Donors</h3>
+                    <p class="text-2xl font-bold text-red-900" id="heart-donors">0</p>
+                </div>
+            </div>
+
+            <!-- Map Container -->
+            <div id="map" class="w-full h-96 rounded-lg mb-6"></div>
+
+            <!-- Search and Filter -->
+            <div class="mb-6">
+                <div class="flex gap-4">
+                    <input type="text" id="search" placeholder="Search by name or location" 
+                           class="flex-1 p-2 border rounded-lg">
+                    <select id="organ-filter" class="p-2 border rounded-lg">
+                        <option value="all">All Organs</option>
+                        <option value="Kidney">Kidney</option>
+                        <option value="Liver">Liver</option>
+                        <option value="Heart">Heart</option>
+                        <option value="Lungs">Lungs</option>
+                        <option value="Cornea">Cornea</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Donor List -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Donor #
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Name
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Organ
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Location
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="donor-list" class="bg-white divide-y divide-gray-200">
+                        <!-- Donor rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dataset of donors with location coordinates
+        const donorData = [
+            { id: "D001", name: "John Smith", organ: "Kidney", location: "New York, NY", lat: 40.7128, lng: -74.0060 },
+            { id: "D002", name: "Sarah Johnson", organ: "Liver", location: "Los Angeles, CA", lat: 34.0522, lng: -118.2437 },
+            { id: "D003", name: "Michael Brown", organ: "Heart", location: "Chicago, IL", lat: 41.8781, lng: -87.6298 },
+            // ... (continuing with 200 entries)
+        ];
+
+        // Generate 200 donor entries
+        function generateDonorData() {
+            const organs = ["Kidney", "Liver", "Heart", "Lungs", "Cornea"];
+            const cities = [
+                { name: "New York, NY", lat: 40.7128, lng: -74.0060 },
+                { name: "Los Angeles, CA", lat: 34.0522, lng: -118.2437 },
+                { name: "Chicago, IL", lat: 41.8781, lng: -87.6298 },
+                { name: "Houston, TX", lat: 29.7604, lng: -95.3698 },
+                { name: "Phoenix, AZ", lat: 33.4484, lng: -112.0740 }
+            ];
+            const firstNames = ["John", "Sarah", "Michael", "Emma", "David", "Lisa", "James", "Mary", "Robert", "Linda"];
+            const lastNames = ["Smith", "Johnson", "Brown", "Davis", "Wilson", "Anderson", "Taylor", "Thomas", "Moore", "Martin"];
+
+            const donors = [];
+            for (let i = 1; i <= 200; i++) {
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const city = cities[Math.floor(Math.random() * cities.length)];
+                const organ = organs[Math.floor(Math.random() * organs.length)];
+
+                donors.push({
+                    id: `D${i.toString().padStart(3, '0')}`,
+                    name: `${firstName} ${lastName}`,
+                    organ: organ,
+                    location: city.name,
+                    lat: city.lat + (Math.random() - 0.5) * 0.5,
+                    lng: city.lng + (Math.random() - 0.5) * 0.5
+                });
+            }
+            return donors;
+        }
+
+        const donors = generateDonorData();
+
+        // Initialize Google Map
+        let map;
+        let markers = [];
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 39.8283, lng: -98.5795 },
+                zoom: 4
+            });
+
+            // Add markers for each donor
+            donors.forEach(donor => {
+                const marker = new google.maps.Marker({
+                    position: { lat: donor.lat, lng: donor.lng },
+                    map: map,
+                    title: `${donor.name} - ${donor.organ}`
+                });
+
+                markers.push(marker);
+
+                // Add info window
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div>
+                            <h3>${donor.name}</h3>
+                            <p>Organ: ${donor.organ}</p>
+                            <p>Location: ${donor.location}</p>
+                        </div>
+                    `
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('total-donors').textContent = donors.length;
+            document.getElementById('kidney-donors').textContent = 
+                donors.filter(d => d.organ === "Kidney").length;
+            document.getElementById('liver-donors').textContent = 
+                donors.filter(d => d.organ === "Liver").length;
+            document.getElementById('heart-donors').textContent = 
+                donors.filter(d => d.organ === "Heart").length;
+        }
+
+        // Populate donor list
+        function populateDonorList(filteredDonors = donors) {
+            const tbody = document.getElementById('donor-list');
+            tbody.innerHTML = '';
+
+            filteredDonors.forEach(donor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${donor.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${donor.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${donor.organ}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${donor.location}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Filter functionality
+        document.getElementById('organ-filter').addEventListener('change', (e) => {
+            const organ = e.target.value;
+            const filteredDonors = organ === 'all' 
+                ? donors 
+                : donors.filter(d => d.organ === organ);
+            populateDonorList(filteredDonors);
+        });
+
+        // Search functionality
+        document.getElementById('search').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredDonors = donors.filter(d => 
+                d.name.toLowerCase().includes(searchTerm) ||
+                d.location.toLowerCase().includes(searchTerm)
+            );
+            populateDonorList(filteredDonors);
+        });
+
+        
+        window.onload = () => {
+            initMap();
+            updateStats();
+            populateDonorList();
+        };
+    </script>
+</body>
+</html>

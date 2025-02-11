@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient-Doctor Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url("{{ url_for('static', filename='doctorpatient.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      color: black;
+      margin: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg ,skyblue, green);
+      padding: 16px 32px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      color:brown;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      color: #c3b4ff;
+    }
+    .sliding-banner {
+  background: linear-gradient(to right, #ff7eb3, #ff758c, #ff4d8c, #f200ff);
+  color: white;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.sliding-banner a {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  margin-right: 40px;
+}
+
+.sliding-banner a:hover {
+  text-decoration: underline;
+}
+
+.sliding-banner span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: slide-left 10s linear infinite;
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .auth-buttons a {
+      padding: 10px 15px;
+      background-color: #4f46e5;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .auth-buttons a:hover {
+      background-color: #4338ca;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      width: 300px;
+    }
+
+    .modal-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .close-btn {
+      background-color: #f87171;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    form input {
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    form button {
+      padding: 10px;
+      background-color: #9333ea;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Health Assistant</h1>
+      <nav>
+        <a href="book-appointment.html">Find Doctors</a>
+        <a href="#chatbot">Consult Online</a>
+        <a href="#">Surgeries</a>
+      </nav>
+    </div>
+    <div class="auth-buttons">
+      <a href="#" id="loginButton">Login</a>
+      <a href="#" id="signupButton">Signup</a>
+      <a href="#" id="profileButton" style="display:none;">👤 Profile</a>
+    </div>
+  </header>
+  <div class="sliding-banner">
+    <span>
+      <a href="book-appointment.html">Book Appointments</a>
+      <a href="book-lab-test.html">Book a Lab Test</a>
+      <a href="organdonor.html">Find an organ donor</a>
+    </span>
+  </div>
+
+  <!-- Login and Signup Modals -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-header">Login</div>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+    <form id="loginForm">
+      <input type="text" placeholder="Username" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <!-- Signup Modal -->
+  <div class="modal" id="signupModal">
+    <div class="modal-header">Signup</div>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+    <form id="signupForm">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Signup</button>
+    </form>
+  </div>
+
+  <div class="modal-overlay" id="profileOverlay" style="display:none;"></div>
+
+    <div class="modal" id="profileModal" style="display:none;">
+        <div class="modal-header">Your Profile</div>
+        <button class="close-btn" onclick="closeProfileModal()">Close</button>
+        <p><strong>Username:</strong> <span id="profileUsername"></span></p>
+        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+  <section class="text-center">
+    <h1 style="text-align:center;color:blue;font-size:300%;font-family:verdana;">Your Home for Health</h1>
+    <p style="text-align:center;color:purple;font-size:200%;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Find and Book Appointments with the Best Doctors Near You</p>
+  </section>
+  <div>
+    <a href="book-appointment.html"><button style="background-color:#f200ff;">Book consultancy</button></a>
+    
+    <a href="book-lab-test.html"><button style="background-color:#de1193"  >       Book Lab Test</button></a>
+    <a href="organdonor.html"><button style="background-color:#de1193">Organ donor </button></a>
+  </div>
+  
+
+  <!-- Chatbot Section -->
+  <section id="chatbot" class="flex justify-center py-10">
+    <div class="bg-white p-6 shadow-lg rounded-lg w-2/3 max-w-3xl">
+      <h1 class="text-2xl font-bold text-center mb-4">Patient-Doctor Chatbot</h1>
+      <div id="chatWindow" class="border border-gray-300 p-4 h-64 overflow-y-auto mb-4 rounded-lg bg-gray-50">
+        <div class="text-sm">Chat starts here...</div>
+      </div>
+      <form id="chatForm" class="flex">
+        <input type="text" id="userInput" placeholder="Type your symptoms..." class="border border-gray-300 flex-grow p-3 rounded-l-lg focus:outline-none">
+        <button type="submit" class="bg-green-500 text-white px-6 rounded-r-lg">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const chatWindow = document.getElementById('chatWindow');
+    const chatForm = document.getElementById('chatForm');
+    const userInput = document.getElementById('userInput');
+
+    // Append message to chat window
+    function appendMessage(sender, message) {
+      const messageContainer = document.createElement('div');
+      messageContainer.classList.add('message', sender.toLowerCase());
+      messageContainer.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      chatWindow.appendChild(messageContainer);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    // Handle user input and chatbot response
+    chatForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const userMessage = userInput.value.trim();
+    let severity = "mild"; // Default value
+    if (userMessage.toLowerCase().includes("severe")) {
+        severity = "severe";
+    } else if (userMessage.toLowerCase().includes("moderate")) {
+        severity = "moderate";
+    }
+    let duration = 1; 
+    const match = userMessage.match(/\b\d+\b/); // Find number in text
+    if (match) {
+        duration = parseInt(match[0], 10);
+    }
+
+      if (!userMessage || isNaN(duration)) {
+        appendMessage('Doctor', "Please enter symptoms, severity of your symptoms and duration.");
+        return;
+    } 
+      appendMessage('Patient', userMessage);
+      userInput.value = '';
+      const diseaseSpecialistMap = {
+        // Cardiology
+        "abdominal aortic aneurysm": "Cardiologist",
+        "angina": "Cardiologist",
+        "arrhythmia": "Cardiologist",
+        "heart failure": "Cardiologist",
+        "hypertension": "Cardiologist",
+        "peripheral arterial disease": "Cardiologist",
+        "pulmonary embolism": "Cardiologist",
+    
+        // Infectious Diseases
+        "acariasis": "Infectious Disease Specialist",
+        "histoplasmosis": "Infectious Disease Specialist",
+        "hpv": "Infectious Disease Specialist",
+        "genital herpes": "Infectious Disease Specialist",
+        "granuloma inguinale": "Infectious Disease Specialist",
+        "guillain barre syndrome": "Neurologist",
+        "rocky mountain spotted fever": "Infectious Disease Specialist",
+        "toxoplasmosis": "Infectious Disease Specialist",
+        "viral hepatitis": "Hepatologist",
+    
+        // Psychiatry & Psychology
+        "acute stress reaction": "Psychiatrist",
+        "adjustment reaction": "Psychiatrist",
+        "asperger syndrome": "Psychiatrist",
+        "conduct disorder": "Psychiatrist",
+        "delirium": "Psychiatrist",
+        "dissociative disorder": "Psychiatrist",
+        "neurosis": "Psychiatrist",
+        "obsessive compulsive disorder (ocd)": "Psychiatrist",
+        "personality disorder": "Psychiatrist",
+        "tourette syndrome": "Neurologist",
+    
+        // Orthopedics
+        "adhesive capsulitis of the shoulder": "Orthopedic Surgeon",
+        "ankylosing spondylitis": "Orthopedic Surgeon",
+        "avascular necrosis": "Orthopedic Surgeon",
+        "bone disorder": "Orthopedic Surgeon",
+        "chronic back pain": "Orthopedic Surgeon",
+        "fracture of the ankle": "Orthopedic Surgeon",
+        "fracture of the pelvis": "Orthopedic Surgeon",
+        "injury of the ankle": "Orthopedic Surgeon",
+        "injury to the spinal cord": "Neurosurgeon",
+        "lumbago": "Orthopedic Surgeon",
+        "nerve impingement near the shoulder": "Orthopedic Surgeon",
+        "osteomyelitis": "Orthopedic Surgeon",
+        "rheumatic fever": "Rheumatologist",
+        "scoliosis": "Orthopedic Surgeon",
+        "spondylolisthesis": "Orthopedic Surgeon",
+    
+        // Ophthalmology
+        "aphakia": "Ophthalmologist",
+        "glaucoma": "Ophthalmologist",
+        "trichiasis": "Ophthalmologist",
+    
+        // Dermatology
+        "aphthous ulcer": "Dermatologist",
+        "athlete's foot": "Dermatologist",
+        "eczema": "Dermatologist",
+        "dyshidrosis": "Dermatologist",
+        "sebaceous cyst": "Dermatologist",
+        "seborrheic keratosis": "Dermatologist",
+        "shingles (herpes zoster)": "Dermatologist",
+        "skin cancer": "Oncologist",
+        "skin pigmentation disorder": "Dermatologist",
+        "molluscum contagiosum": "Dermatologist",
+    
+        // Gastroenterology
+        "appendicitis": "General Surgeon",
+        "colorectal cancer": "Oncologist",
+        "gastritis": "Gastroenterologist",
+        "gastroduodenal ulcer": "Gastroenterologist",
+        "gallstone": "Gastroenterologist",
+        "intestinal cancer": "Oncologist",
+        "stomach cancer": "Oncologist",
+        "ulcerative colitis": "Gastroenterologist",
+    
+        // Neurology
+        "epidural hemorrhage": "Neurologist",
+        "epilepsy": "Neurologist",
+        "multiple sclerosis": "Neurologist",
+        "neuropathy": "Neurologist",
+        "pseudotumor cerebri": "Neurologist",
+        "trigeminal neuralgia": "Neurologist",
+        "spinocerebellar ataxia": "Neurologist",
+    
+        // ENT (Ear, Nose, Throat)
+        "conjunctivitis": "Ophthalmologist",
+        "conjunctivitis due to virus": "Ophthalmologist",
+        "deviated nasal septum": "ENT Specialist",
+        "eustachian tube dysfunction (ear disorder)": "ENT Specialist",
+        "laryngitis": "ENT Specialist",
+        "nasal polyp": "ENT Specialist",
+        "tonsillar hypertrophy": "ENT Specialist",
+        "tonsillitis": "ENT Specialist",
+    
+        // Pulmonology
+        "pleural effusion": "Pulmonologist",
+        "pneumoconiosis": "Pulmonologist",
+    
+        // Endocrinology
+        "diabetic ketoacidosis": "Endocrinologist",
+        "graves disease": "Endocrinologist",
+        "hyperlipidemia": "Endocrinologist",
+        "hyperemesis gravidarum": "Obstetrician",
+        "hyponatremia": "Endocrinologist",
+    
+        // Obstetrics & Gynecology
+        "benign vaginal discharge (leukorrhea)": "Gynecologist",
+        "missed abortion": "Gynecologist",
+        "placenta previa": "Gynecologist",
+        "pregnancy": "Obstetrician",
+        "premature rupture of amniotic membrane": "Gynecologist",
+        "spontaneous abortion": "Gynecologist",
+        "vulvar disorder": "Gynecologist",
+    
+        // Urology
+        "urinary tract infection": "Urologist",
+        "prostate cancer": "Urologist",
+        "phimosis": "Urologist",
+    
+        // Oncology
+        "kaposi sarcoma": "Oncologist",
+        "melanoma": "Oncologist",
+        "soft tissue sarcoma": "Oncologist",
+    
+        // Rheumatology
+        "rheumatic fever": "Rheumatologist",
+        "sjogren syndrome": "Rheumatologist",
+    
+        // Hematology
+        "g6pd enzyme deficiency": "Hematologist",
+        "hematoma": "Hematologist",
+        "rhabdomyolysis": "Hematologist",
+        "thalassemia": "Hematologist",
+        "white blood cell disease": "Hematologist",
+    
+        // General Surgery
+        "birth trauma": "Pediatric Surgeon",
+        "bladder obstruction": "Urologist",
+        "dislocation of the finger": "Orthopedic Surgeon",
+        "dislocation of the vertebra": "Neurosurgeon",
+        "inguinal hernia": "General Surgeon",
+        "mastectomy": "General Surgeon",
+        "open wound of the face": "Plastic Surgeon",
+        "open wound of the hand": "Orthopedic Surgeon",
+        "open wound of the head": "Neurosurgeon",
+        "open wound of the jaw": "Oral Surgeon",
+        "open wound of the nose": "ENT Specialist",
+        "necrotizing fasciitis": "General Surgeon",
+    
+        // Miscellaneous
+        "factitious disorder": "Psychiatrist",
+        "fibroadenoma": "Oncologist",
+        "paronychia": "Dermatologist",
+        "cerebral edema": "Neurologist",
+        "poisoning due to antipsychotics": "Toxicologist",
+        "poisoning due to opioids": "Toxicologist",
+        "callus": "Podiatrist",
+        "bunion": "Podiatrist",
+        "burn": "Plastic Surgeon",
+        "sialoadenitis": "ENT Specialist",
+        "zenker diverticulum": "Gastroenterologist",
+        "stricture of the esophagus": "Gastroenterologist"
+    };
+      try {
+        // Send symptoms to the backend for prediction
+        const response = await fetch('http://127.0.0.1:5000/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            message: userMessage,
+            severity: severity,
+            duration: duration
+        })
+        });
+
+        if (response.ok) {
+        const data = await response.json();
+        appendMessage('Doctor', `It might be ${data.prediction}. The Urgency Level is ${data.urgency}`);
+        const predictedDisease = data.prediction;
+        const specialist = diseaseSpecialistMap[predictedDisease]||"General Practitioner" ;
+        const urgency = data.urgency.toLowerCase();
+            if(urgency=="mild"){
+                appendMessage('Doctor',`Your symptoms are not very severe. So, proper rest and medication at home is enough for your cure.
+                Consider  consulting a doctor if the symptoms get worse.
+                `);
+            }else if(urgency=="moderate"){
+                appendMessage('Doctor',`It is advisable to consult a doctor within 2-3 days before the symptoms worsen.`)
+            }else if(urgency=="severe"){
+                appendMessage('Doctor',`Immediate doctor consultation is required possibly within the same day. The doctor will further guide you on the course of treatment in order to contain the symptoms.`)
+            }else if(urgency=="emergency"){
+                appendMessage('Doctor',`You need to get immediate medical attention.`)
+            }
+
+            appendMessage('Doctor',`The recommended specialist for this disease is ${specialist}, Let me recommend some of the specialists in those fields.`);
+        } else {
+          appendMessage('Doctor', "I couldn't process your request. Please try again later.");
+        }
+      } catch (error) {
+        appendMessage('Doctor', "There was an error connecting to the server. Please try again later.");
+      }
+    });
+
+    // Initial greeting
+    appendMessage('Doctor', "👋 Hello! I'm your medical assistant. Please describe your symptoms, and I'll try to help you identify potential conditions.");
+
+    // Smooth scroll to chatbot when Consult Online link is clicked
+    document.getElementById('consultOnlineLink').addEventListener('click', (event) => {
+      event.preventDefault();
+      document.getElementById('chatbot').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+  <script>
+    const loginButton = document.getElementById('loginButton');
+    const signupButton = document.getElementById('signupButton');
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    // Show login modal
+    loginButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      openModal(loginModal);
+    });
+
+    // Show signup modal
+    signupButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      openModal(signupModal);
+    });
+
+    function openModal(modal) {
+      modal.style.display = 'block';
+      modalOverlay.style.display = 'block';
+    }
+
+    function closeModal() {
+      loginModal.style.display = 'none';
+      signupModal.style.display = 'none';
+      modalOverlay.style.display = 'none';
+    }
+    
+    document.getElementById("signupForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+    
+        // Get user input from the signup form
+        const name = document.getElementById("signupForm").elements[0].value;
+        const email = document.getElementById("signupForm").elements[1].value;
+        const password = document.getElementById("signupForm").elements[2].value;
+    
+        // Regular expression for validating email
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+        // Validate email format
+        if (!emailRegex.test(email)) {
+            alert("Invalid email format! Please enter a valid email.");
+            return; // Stop form submission if email is invalid
+        }
+    
+        try {
+            const response = await fetch("http://localhost:5000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password })
+            });
+    
+            const result = await response.json();
+            alert(result.message);
+    
+            // If signup is successful, close modal and redirect to profile
+            if (response.ok) {
+                closeModal();
+                window.location.href = "profile.html"; // Redirect after signup
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Something went wrong! Please try again.");
+        }
+    });
+    
+
+    // Login Form Submission
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        // Get user input from the login form
+        const username = document.getElementById("loginForm").elements[0].value;
+        const password = document.getElementById("loginForm").elements[1].value;
+
+        try {
+            const response = await fetch("http://localhost:5000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+
+            // If login is successful, close modal and redirect to profile
+            if (response.ok) {
+                closeModal();
+                window.location.href = "profile.html"; // Redirect after login
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Something went wrong! Please try again.");
+        }
+    });
+
+    // Function to close modals
+    function closeModal() {
+        document.getElementById("loginModal").style.display = "none";
+        document.getElementById("signupModal").style.display = "none";
+        document.getElementById("modalOverlay").style.display = "none";
+    }
+
+    // Function to fetch user profile and show Profile Button
+async function checkUserSession() {
+try {
+    const response = await fetch("http://127.0.0.1:5000/profile");
+    const data = await response.json();
+
+    if (response.ok) {
+        // Show Profile button and hide Login/Signup buttons
+        document.getElementById("profileButton").style.display = "inline-block";
+        document.getElementById("loginButton").style.display = "none";
+        document.getElementById("signupButton").style.display = "none";
+
+        // Store user data for modal
+        document.getElementById("profileUsername").textContent = data.username;
+        document.getElementById("profileEmail").textContent = data.email;
+    }
+} catch (error) {
+    console.error("User not logged in.");
+}
+}
+
+// Show Profile Modal when Profile Button is clicked
+document.getElementById("profileButton").addEventListener("click", function(event) {
+event.preventDefault();
+document.getElementById("profileModal").style.display = "block";
+document.getElementById("profileOverlay").style.display = "block";
+});
+
+// Close Profile Modal
+function closeProfileModal() {
+document.getElementById("profileModal").style.display = "none";
+document.getElementById("profileOverlay").style.display = "none";
+}
+
+// Logout Function
+function logout() {
+fetch("http://localhost:5000/logout", { method: "POST" })
+    .then(() => {
+        window.location.href = "finalwebpage.html"; // Refresh to reset session
+    });
+}
+
+// Run checkUserSession() when the page loads
+checkUserSession();
+
+  </script>
+ 
+  
+</body>
+</html> 

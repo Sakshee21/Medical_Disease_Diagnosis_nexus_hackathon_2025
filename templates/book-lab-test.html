@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Lab Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        header {
+            background: #1319d6;
+            color: rgb(45, 233, 51);
+            padding: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #d6500e;
+            color: rgb(86, 230, 9);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 20px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .sliding-window {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .sliding-window.show {
+            right: 0;
+        }
+        .lab-test-item {
+            background: #f4f4f4;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .lab-test-item:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Lab Test</h1>
+        <p>Click below to book a lab test</p>
+        <button onclick="toggleSlidingWindow()">Book Lab Test</button>
+    </header>
+
+    <div id="slidingWindow" class="sliding-window">
+        <h2>Available Lab Tests</h2>
+        <div class="lab-test-item" onclick="bookLabTest('Complete Blood Count (CBC)')">
+            Complete Blood Count (CBC)
+        </div>
+        <div class="lab-test-item" onclick="bookLabTest('Lipid Profile')">
+            Lipid Profile
+        </div>
+        <div class="lab-test-item" onclick="bookLabTest('Liver Function Test (LFT)')">
+            Liver Function Test (LFT)
+        </div>
+        <div class="lab-test-item" onclick="bookLabTest('Thyroid Function Test (TFT)')">
+            Thyroid Function Test (TFT)
+        </div>
+        <div class="lab-test-item" onclick="bookLabTest('Vitamin D Test')">
+            Vitamin D Test
+        </div>
+        <div class="lab-test-item" onclick="bookLabTest('Urine Analysis')">
+            Urine Analysis
+        </div>
+    </div>
+
+    <script>
+        function toggleSlidingWindow() {
+            const slidingWindow = document.getElementById('slidingWindow');
+            slidingWindow.classList.toggle('show');
+        }
+
+        function bookLabTest(testName) {
+            alert("Lab test '${testName}' successfully booked!");
+            toggleSlidingWindow();
+        }
+    </script>
+</body>
+</html>
