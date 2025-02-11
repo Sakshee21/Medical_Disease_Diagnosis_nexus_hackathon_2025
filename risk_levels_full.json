@@ -1,0 +1,722 @@
+{
+    "abdominal aortic aneurysm": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "acariasis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "acute stress reaction": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "adhesive capsulitis of the shoulder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "adjustment reaction": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "angina": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "ankylosing spondylitis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "aphakia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "aphthous ulcer": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "appendicitis": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "arrhythmia": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "asperger syndrome": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "athlete's foot": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "avascular necrosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "benign vaginal discharge (leukorrhea)": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "birth trauma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "bladder obstruction": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "bone disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "breast infection (mastitis)": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "bunion": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "burn": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "callus": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "carcinoid syndrome": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "cerebral edema": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "cervical disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "chronic back pain": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "chronic pancreatitis": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "colorectal cancer": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "conduct disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "conjunctivitis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "conjunctivitis due to virus": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "delirium": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "developmental disability": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "deviated nasal septum": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "diabetic ketoacidosis": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "diaper rash": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "dislocation of the finger": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "dislocation of the vertebra": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "dissociative disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "dyshidrosis": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "eczema": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "epididymitis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "epidural hemorrhage": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "epilepsy": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "erythema multiforme": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "eustachian tube dysfunction (ear disorder)": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "factitious disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "fibroadenoma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "fracture of the ankle": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "fracture of the pelvis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "g6pd enzyme deficiency": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "galactorrhea of unknown cause": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "gallstone": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "gastritis": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "gastroduodenal ulcer": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "genital herpes": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "granuloma inguinale": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "graves disease": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "guillain barre syndrome": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "gynecomastia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "heart failure": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "hemangioma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "hematoma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "herniated disk": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "histoplasmosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "hpv": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "hyperemesis gravidarum": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "hyperlipidemia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "hyponatremia": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "inguinal hernia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "injury of the ankle": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "injury to the spinal cord": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "intestinal cancer": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "kaposi sarcoma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "laryngitis": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "lichen planus": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "lichen simplex": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "lumbago": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "lymphogranuloma venereum": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "male genitalia infection": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "mastectomy": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "melanoma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "missed abortion": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "molluscum contagiosum": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "mucositis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "multiple sclerosis": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "nasal polyp": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "necrotizing fasciitis": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "nerve impingement near the shoulder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "neurosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "obsessive compulsive disorder (ocd)": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "open wound of the face": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "open wound of the hand": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "open wound of the head": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "open wound of the jaw": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "open wound of the nose": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "osteomyelitis": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "paronychia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "peripheral arterial disease": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "peripheral nerve disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "personality disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "phimosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "placenta previa": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "pleural effusion": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "pneumoconiosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "poisoning due to antipsychotics": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "poisoning due to opioids": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "pregnancy": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "premature rupture of amniotic membrane": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "prostate cancer": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "pseudotumor cerebri": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "pulmonary embolism": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "rhabdomyolysis": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "rheumatic fever": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "rocky mountain spotted fever": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "scoliosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "sebaceous cyst": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "seborrheic keratosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "septic arthritis": {
+        "severe": "Emergency",
+        "moderate": "Emergency",
+        "mild": "Emergency"
+    },
+    "shingles (herpes zoster)": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "sialoadenitis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "sjogren syndrome": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "skin cancer": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "skin pigmentation disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "soft tissue sarcoma": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "spinocerebellar ataxia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "spondylolisthesis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "spontaneous abortion": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "stomach cancer": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "strep throat": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "stricture of the esophagus": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "thalassemia": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "tonsillar hypertrophy": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "tonsillitis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "tourette syndrome": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "toxoplasmosis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "trichiasis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "trigeminal neuralgia": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "ulcerative colitis": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "urinary tract infection": {
+        "severe": "Severe",
+        "moderate": "Moderate",
+        "mild": "Mild"
+    },
+    "viral hepatitis": {
+        "severe": "Emergency",
+        "moderate": "Severe",
+        "mild": "Moderate"
+    },
+    "vulvar disorder": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "white blood cell disease": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    },
+    "zenker diverticulum": {
+        "severe": "Moderate",
+        "moderate": "Mild",
+        "mild": "Mild"
+    }
+}
